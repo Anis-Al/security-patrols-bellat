@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_checkpoint_tree" model="ir.ui.view">
+        <field name="name">security.checkpoint.tree</field>
+        <field name="model">security.checkpoint</field>
+        <field name="arch" type="xml">
+            <tree string="Checkpoints">
+                <field name="name"/>
+                <field name="site_id"/>
+                <field name="check_type"/>
+                <field name="identifier"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_checkpoint_form" model="ir.ui.view">
+        <field name="name">security.checkpoint.form</field>
+        <field name="model">security.checkpoint</field>
+        <field name="arch" type="xml">
+            <form string="Checkpoint">
+                <header>
+                    <button name="action_generate_identifier" string="Generate Identifier" type="object" class="oe_highlight" invisible="identifier != False"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Checkpoint"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="site_id"/>
+                            <field name="check_type"/>
+                            <field name="identifier" readonly="check_type == 'qrcode'"/>
+                            <field name="qr_code" widget="image" class="oe_avatar" invisible="check_type != 'qrcode'"/>
+                        </group>
+                        <group string="GPS Coordinates">
+                            <group>
+                                <field name="latitude"/>
+                                <field name="longitude"/>
+                            </group>
+                            <group>
+                                <field name="map" widget="map" options="{'latitude_field': 'latitude', 
+                                'longitude_field': 'longitude', 'enable_search': false, 'readonly': true }"/>
+                            </group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Instructions">
+                            <field name="instructions" widget="html"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_checkpoint_form" model="ir.actions.act_window">
+        <field name="name">Checkpoints</field>
+        <field name="res_model">security.checkpoint</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

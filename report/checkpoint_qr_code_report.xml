@@ -1,0 +1,27 @@
+<odoo>
+    <record id="action_report_checkpoint_qrcode" model="ir.actions.report">
+        <field name="name">Checkpoint QR Code</field>
+        <field name="model">security.checkpoint</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tournees_securite.report_checkpoint_qrcode_template</field>
+        <field name="report_file">tournees_securite.report_checkpoint_qrcode_template</field>
+        <field name="binding_model_id" ref="model_security_checkpoint"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_checkpoint_qrcode_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <div class="page text-center">
+                        <h1 style="font-size: 3rem;"><span t-field="doc.name"/></h1>
+                        <br/>
+                        <img t-if="doc.qr_code" t-att-src="'data:image/png;base64,%s' % doc.qr_code.decode('utf-8')" style="width:100mm;height:100mm;"/>
+                        <br/>
+                        <p style="font-size: 2rem;"><span t-field="doc.identifier"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_agent" model="ir.ui.view">
+        <field name="name">hr.employee.form.agent</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+              <xpath expr="//form//notebook//page[@name='public']//group[@name='departure']" position="after">
+                <group string="Security Patrol">
+                    <field name="is_agent"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_agent_tree" model="ir.ui.view">
+        <field name="name">hr.employee.tree.agent</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Agents">
+                <field name="name"/>
+                <field name="work_email"/>
+                <field name="work_phone"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_agent_search" model="ir.ui.view">
+        <field name="name">hr.employee.search.agent</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <search string="Agents">
+                <field name="name" string="Agent" filter_domain="['|', ('work_email', 'ilike', self), ('name', 'ilike', self)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_agent_form" model="ir.actions.act_window">
+        <field name="name">Agents</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,form</field>
+
+        <field name="view_id" ref="view_agent_tree"/>
+        <field name="search_view_id" ref="view_agent_search"/>
+        <field name="domain">[('is_agent', '=', True)]</field>
+        <field name="context">{'default_is_agent': True}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new agent
+          </p>
+        </field>
+    </record>
+
+
+</odoo>

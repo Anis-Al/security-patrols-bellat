@@ -1,0 +1,21 @@
+<odoo>
+<menuitem id="menu_ts_root" name="Security Patrol" web_icon="security_patrol,static/description/icon.png" sequence="10"/>
+
+<menuitem id="menu_ts_dashboard" name="Dashboard" parent="menu_ts_root" sequence="10"/>
+
+<menuitem id="menu_ts_processus" name="Process" parent="menu_ts_root" sequence="20"/>
+<menuitem id="menu_ts_tournee" name="Tours" parent="menu_ts_processus" action="action_security_tour" sequence="10"/>
+<menuitem id="menu_ts_incident" name="Incidents" parent="menu_ts_processus" sequence="20"/>
+
+<menuitem id="menu_ts_master_data" name="Master Data" parent="menu_ts_root" sequence="30"/>
+<menuitem id="menu_ts_site" name="Sites" parent="menu_ts_master_data" sequence="10" action="action_site_form"/>
+<menuitem id="menu_ts_point" name="Control points" parent="menu_ts_master_data" sequence="20" action="action_checkpoint_form"/>
+<menuitem id="menu_ts_agents" name="Agents" parent="menu_ts_master_data" action="action_agent_form" sequence="30"/>
+
+<menuitem id="menu_ts_configuration" name="Settings" parent="menu_ts_root" sequence="40" action="action_ts_config_settings"/>
+
+
+
+
+
+</odoo>

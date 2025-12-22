@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tour_form" model="ir.ui.view">
+        <field name="name">security.tour.form</field>
+        <field name="model">security.tour</field>
+        <field name="arch" type="xml">
+            <form string="Security Tour">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,planned,in_progress,finished"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="site_id"/>
+                            <field name="frequency"/>
+                            <field name="agent_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="start_time" widget="float_time"/>
+                            <field name="end_time" widget="float_time"/>
+                        </group>
+                    </group>
+                    <group string="Requirements">
+                        <group>
+                            <field name="require_selfie"/>
+                            <field name="require_photo_place"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Checkpoints" name="checkpoints" invisible="not site_id">
+                            <field name="checkpoint_ids" widget="section_and_note_one2many">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="checkpoint_id" domain="[('site_id', '=', parent.site_id)]"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Logs" name="logs">
+                            <field name="log_ids">
+                                <tree editable="bottom">
+                                    <field name="time"/>
+                                    <field name="checkpoint_id"/>
+                                    <field name="status"/>
+                                    
+                                    <field name="require_selfie" column_invisible="1"/>
+                                    <field name="require_photo_place" column_invisible="1"/>
+                                    
+                                    <field name="photo_selfie" required="require_selfie"/>
+                                    <field name="photo_place" required="require_photo_place"/>
+                                    
+                                    <field name="comment"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tour_tree" model="ir.ui.view">
+        <field name="name">security.tour.tree</field>
+        <field name="model">security.tour</field>
+        <field name="arch" type="xml">
+            <tree string="Security Tours">
+                <field name="name"/>
+                <field name="site_id"/>
+                <field name="agent_id"/>
+                <field name="date"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'planned'" decoration-success="state == 'finished'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_security_tour" model="ir.actions.act_window">
+        <field name="name">Tours</field>
+        <field name="res_model">security.tour</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

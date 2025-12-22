@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_security_site,security.site,model_security_site,base.group_user,1,1,1,1
+access_security_checkpoint,security.checkpoint,model_security_checkpoint,base.group_user,1,1,1,1
+access_security_tour,security.tour,model_security_tour,base.group_user,1,1,1,1
+access_security_tour_line,security.tour.line,model_security_tour_line,base.group_user,1,1,1,1
+access_security_tour_log,security.tour.log,model_security_tour_log,base.group_user,1,1,1,1
