@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tour_log_form" model="ir.ui.view">
+        <field name="name">security.tour.log.form</field>
+        <field name="model">security.tour.log</field>
+        <field name="arch" type="xml">
+            <form string="Tour Log">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" 
+                                name="action_view_incidents"
+                                class="oe_stat_button" 
+                                icon="fa-exclamation-triangle"
+                                invisible="status != 'incident'">
+                            <field name="incident_ids" widget="statinfo" string="Incidents"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="tour_id"/>
+                            <field name="checkpoint_id"/>
+                            <field name="time"/>
+                            <field name="status"/>
+                        </group>
+                        <group>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                            <field name="require_selfie" invisible="1"/>
+                            <field name="require_photo_place" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Photos" name="photos">
+                            <group>
+                                <field name="photo_selfie" widget="image" invisible="not require_selfie"/>
+                                <field name="photo_place" widget="image" invisible="not require_photo_place"/>
+                            </group>
+                        </page>
+                        <page string="Comment" name="comment">
+                            <field name="comment" placeholder="Add any comments or observations..."/>
+                        </page>
+                        <page string="Incidents" name="incidents" invisible="status != 'incident'">
+                            <field name="incident_ids">
+                                <tree>
+                                    <field name="title"/>
+                                    <field name="severity" widget="badge"/>
+                                    <field name="category"/>
+                                    <field name="status" widget="badge"/>
+                                    <field name="assigned_to"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

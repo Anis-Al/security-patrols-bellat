@@ -2,5 +2,8 @@ from . import agent
 from . import site
 from . import checkpoint
 from . import res_config_settings
+from . import tour_config_mixin
+from . import tour_template
 from . import tour
 from . import tour_log
+from . import incident

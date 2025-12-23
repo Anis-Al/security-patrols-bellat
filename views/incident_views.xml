@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_security_incident_tree" model="ir.ui.view">
+        <field name="name">security.incident.tree</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <tree string="Incidents" decoration-danger="severity=='critical'" decoration-warning="severity=='high'">
+                <field name="title"/>
+                <field name="site_id"/>
+                <field name="checkpoint_id"/>
+                <field name="category"/>
+                <field name="severity" widget="badge" decoration-danger="severity=='critical'" decoration-warning="severity=='high'" decoration-info="severity=='medium'"/>
+                <field name="status" widget="badge" decoration-success="status=='resolved'" decoration-info="status in ['acknowledged', 'in_progress']"/>
+                <field name="priority" widget="priority"/>
+                <field name="reported_by"/>
+                <field name="reported_date"/>
+                <field name="assigned_to"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_security_incident_form" model="ir.ui.view">
+        <field name="name">security.incident.form</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <form string="Incident">
+                <header>
+                    <field name="status" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_security_tour)d" type="action" class="oe_stat_button" icon="fa-route" context="{'search_default_id': tour_id}">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">View Tour</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="title" placeholder="Incident Title..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="category"/>
+                            <field name="severity" widget="badge"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="site_id"/>
+                            <field name="checkpoint_id"/>
+                        </group>
+                        <group>
+                            <field name="log_id"/>
+                            <field name="tour_id"/>
+                            <field name="reported_by"/>
+                            <field name="reported_date"/>
+                            <field name="assigned_to"/>
+                            <field name="resolved_date" invisible="status != 'resolved'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" placeholder="Describe the incident in detail..."/>
+                        </page>
+                        <page string="Photos" name="photos">
+                            <field name="photo_ids" widget="many2many_binary" class="o_field_many2many_images"/>
+                        </page>
+                        <page string="Resolution" name="resolution" invisible="status not in ['in_progress', 'resolved', 'closed']">
+                            <group>
+                                <field name="resolution_notes" placeholder="Add resolution notes..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_security_incident_kanban" model="ir.ui.view">
+        <field name="name">security.incident.kanban</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="status" class="o_kanban_small_column">
+                <field name="title"/>
+                <field name="severity"/>
+                <field name="category"/>
+                <field name="priority"/>
+                <field name="status"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title"><field name="title"/></strong>
+                                </div>
+                                <field name="priority" widget="priority"/>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <field name="checkpoint_id"/>
+                                <div>
+                                    <span class="badge" t-att-class="{'badge-danger': record.severity.raw_value == 'critical', 'badge-warning': record.severity.raw_value == 'high', 'badge-info': record.severity.raw_value == 'medium', 'badge-secondary': record.severity.raw_value == 'low'}">
+                                        <field name="severity"/>
+                                    </span>
+                                    <span class="badge badge-secondary ml-2">
+                                        <field name="category"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <field name="reported_date" widget="date"/>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <field name="assigned_to" widget="many2one_avatar_user"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_security_incident_search" model="ir.ui.view">
+        <field name="name">security.incident.search</field>
+        <field name="model">security.incident</field>
+        <field name="arch" type="xml">
+            <search string="Search Incidents">
+                <field name="title"/>
+                <field name="checkpoint_id"/>
+                <field name="site_id"/>
+                <field name="reported_by"/>
+                 <separator/>
+                <filter string="Reported" name="reported" domain="[('status', '=', 'reported')]"/>
+                <filter string="In Progress" name="in_progress" domain="[('status', '=', 'in_progress')]"/>
+                <filter string="Resolved" name="resolved" domain="[('status', '=', 'resolved')]"/>
+                <separator/>
+                <filter string="Critical" name="critical" domain="[('severity', '=', 'critical')]"/>
+                <filter string="High" name="high" domain="[('severity', '=', 'high')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                    <filter string="Severity" name="group_severity" context="{'group_by': 'severity'}"/>
+                    <filter string="Category" name="group_category" context="{'group_by': 'category'}"/>
+                    <filter string="Site" name="group_site" context="{'group_by': 'site_id'}"/>
+                    <filter string="Assigned To" name="group_assigned" context="{'group_by': 'assigned_to'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_security_incident" model="ir.actions.act_window">
+        <field name="name">Incidents</field>
+        <field name="res_model">security.incident</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_reported': 1, 'search_default_in_progress': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No incidents reported yet!
+            </p>
+            <p>
+                Incidents will appear here when agents report them during tours.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_security_incident"
+              name="Incidents"
+              parent="menu_ts_processus"
+              action="action_security_incident"
+              sequence="20"/>
+</odoo>

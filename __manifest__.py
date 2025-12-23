@@ -26,7 +26,10 @@
         "views/site_views.xml",
         "views/checkpoint_views.xml",
         "views/res_config_settings_views.xml",
+        "views/tour_template_views.xml",
         "views/tour_views.xml",
+        "views/tour_log_views.xml",
+        "views/incident_views.xml",
         "views/menus.xml",
         "report/checkpoint_qr_code_report.xml"
     ],
