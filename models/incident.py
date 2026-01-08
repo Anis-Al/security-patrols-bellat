@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api
 
 
@@ -45,7 +47,6 @@ class Incident(models.Model):
     reported_by = fields.Many2one(related='log_id.tour_id.agent_id', string='Reported By', store=True, readonly=True)
     reported_date = fields.Datetime(string='Reported Date', default=fields.Datetime.now, readonly=True)
     
-    assigned_to = fields.Many2one('res.users', string='Assigned To')
     resolution_notes = fields.Text(string='Resolution Notes')
     resolved_date = fields.Datetime(string='Resolved Date', readonly=True)
     

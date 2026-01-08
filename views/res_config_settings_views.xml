@@ -20,6 +20,14 @@
                                 </div>
                             </div>
                         </setting>
+                        
+                        <setting id="round_distance" string="Max Checkpoint Distance" help="Maximum allowed distance (in meters) between agent GPS and checkpoint GPS when scanning">
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <field name="max_checkpoint_distance" class="o_light_label me-2" widget="integer"/> meters
+                                </div>
+                            </div>
+                        </setting>
                     </block>
                     
                     <block title="Incidents" name="incident_settings">

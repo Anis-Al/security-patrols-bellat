@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from odoo import fields, models
 
 class ResConfigSettings(models.TransientModel):
@@ -35,4 +37,11 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='security_patrol.require_photo_place',
         default=False,
         help="If enabled, agents must take a photo of the location when logging a checkpoint."
+    )
+    
+    max_checkpoint_distance = fields.Integer(
+        string="Max Checkpoint Distance (meters)",
+        config_parameter='security_patrol.max_checkpoint_distance',
+        default=50,
+        help="Maximum allowed distance (in meters) between agent GPS and checkpoint GPS when scanning."
     )

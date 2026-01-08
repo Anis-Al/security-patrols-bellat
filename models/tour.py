@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api
 
 class Tour(models.Model):
@@ -38,6 +40,9 @@ class Tour(models.Model):
     
     require_photo_place = fields.Boolean(string='Require Photo of Place', 
     default=lambda self: self.env['ir.config_parameter'].sudo().get_param('security_patrol.require_photo_place') == 'True')
+    
+    max_checkpoint_distance = fields.Integer(string='Max Checkpoint Distance (m)', 
+    default=lambda self: int(self.env['ir.config_parameter'].sudo().get_param('security_patrol.max_checkpoint_distance', 50)))
     
     log_ids = fields.One2many('security.tour.log', 'tour_id', string='Logs')
 

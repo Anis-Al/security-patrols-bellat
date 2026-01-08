@@ -3,8 +3,8 @@
         <field name="name">Checkpoint QR Code</field>
         <field name="model">security.checkpoint</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">tournees_securite.report_checkpoint_qrcode_template</field>
-        <field name="report_file">tournees_securite.report_checkpoint_qrcode_template</field>
+        <field name="report_name">security_patrol.report_checkpoint_qrcode_template</field>
+        <field name="report_file">security_patrol.report_checkpoint_qrcode_template</field>
         <field name="binding_model_id" ref="model_security_checkpoint"/>
         <field name="binding_type">report</field>
     </record>

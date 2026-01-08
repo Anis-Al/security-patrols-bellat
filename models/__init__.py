@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from . import agent
 from . import site
 from . import checkpoint

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api, _
 from datetime import timedelta
 
@@ -94,6 +96,7 @@ class TourTemplate(models.Model):
                 'strict_ordering': self.strict_ordering,
                 'require_selfie': self.require_selfie,
                 'require_photo_place': self.require_photo_place,
+                'max_checkpoint_distance': self.max_checkpoint_distance,
                 'state': 'planned',
                 'checkpoint_ids': [(0, 0, {
                     'checkpoint_id': line.checkpoint_id.id,
@@ -127,7 +130,7 @@ class TourTemplate(models.Model):
                 'domain': [('id', 'in', tours.ids)],
                 'target': 'current',
             }
-
+    #@api.model_create_multi from now on
     @api.model
     def create(self, vals):
         if vals.get('name', 'New') == 'New':

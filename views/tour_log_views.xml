@@ -46,7 +46,6 @@
                                     <field name="severity" widget="badge"/>
                                     <field name="category"/>
                                     <field name="status" widget="badge"/>
-                                    <field name="assigned_to"/>
                                 </tree>
                             </field>
                         </page>

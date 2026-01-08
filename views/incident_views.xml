@@ -14,7 +14,6 @@
                 <field name="priority" widget="priority"/>
                 <field name="reported_by"/>
                 <field name="reported_date"/>
-                <field name="assigned_to"/>
             </tree>
         </field>
     </record>
@@ -53,7 +52,6 @@
                             <field name="tour_id"/>
                             <field name="reported_by"/>
                             <field name="reported_date"/>
-                            <field name="assigned_to"/>
                             <field name="resolved_date" invisible="status != 'resolved'"/>
                         </group>
                     </group>
@@ -114,7 +112,7 @@
                                     <field name="reported_date" widget="date"/>
                                 </div>
                                 <div class="oe_kanban_bottom_right">
-                                    <field name="assigned_to" widget="many2one_avatar_user"/>
+                                    <field name="reported_by" widget="many2one_avatar_user"/>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +143,6 @@
                     <filter string="Severity" name="group_severity" context="{'group_by': 'severity'}"/>
                     <filter string="Category" name="group_category" context="{'group_by': 'category'}"/>
                     <filter string="Site" name="group_site" context="{'group_by': 'site_id'}"/>
-                    <filter string="Assigned To" name="group_assigned" context="{'group_by': 'assigned_to'}"/>
                 </group>
             </search>
         </field>

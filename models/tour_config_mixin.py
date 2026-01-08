@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields
 
 
 class TourConfigMixin(models.AbstractModel):
-    """Mixin for shared tour configuration fields"""
     _name = 'security.tour.config.mixin'
     _description = 'Tour Configuration Mixin'
 
@@ -28,4 +29,10 @@ class TourConfigMixin(models.AbstractModel):
         string='Require Photo of Place',
         default=lambda self: self.env['ir.config_parameter'].sudo().get_param('security_patrol.require_photo_place') == 'True',
         help="If enabled, agents must take a photo of the location when logging a checkpoint."
+    )
+    
+    max_checkpoint_distance = fields.Integer(
+        string='Max Checkpoint Distance (m)',
+        default=lambda self: int(self.env['ir.config_parameter'].sudo().get_param('security_patrol.max_checkpoint_distance', 50)),
+        help="Maximum allowed distance (in meters) between agent GPS and checkpoint GPS when scanning."
     )
